@@ -9,11 +9,11 @@ const {
   fileExists,
   directoryExists,
   exit
-} = require('./utils')
+} = require('../utils')
 
 ;(function main() {
   const relativeBookPath = process.argv[2]
-  const bookPath = path.resolve(__dirname, relativeBookPath)
+  const bookPath = path.resolve(__dirname, '../', relativeBookPath)
   if (!relativeBookPath) exit(
     'Error: Must provide a path to a book folder like so:\n\n' +
     'node compile-book books/04-Dorothy-and-Wizard'
@@ -37,10 +37,10 @@ const {
 })()
 
 function compileBook (relativeBookPath) {
-  const bookPath = path.resolve(__dirname, relativeBookPath)
+  const bookPath = path.resolve(__dirname, '../', relativeBookPath)
   const bookHtmlPath = path.resolve(bookPath, 'index.html')
   const bookJsonPath = path.resolve(bookPath, 'book.json')
-  const bookScriptPath = path.resolve(__dirname, relativeBookPath)
+  const bookScriptPath = path.resolve(__dirname, '../', relativeBookPath)
 
   const $ = cheerio.load(
     readFileSync(bookHtmlPath, 'utf8')
@@ -55,13 +55,13 @@ function compileBook (relativeBookPath) {
 
 function buildBookJSON ($, bookPath, bookScriptPath) {
   const book = []
-  const { startAfter } = require(bookScriptPath)
+  const { startAfter, selector } = require(bookScriptPath)
 
   let lastImages
   let previousTag = 'p'
   let isReady = false
 
-  $('body > *').each(function(i, elem) {
+  $(selector || 'body > *').each(function(i, elem) {
 
     const $el = $(this)
     const tag = $el.get(0).tagName
