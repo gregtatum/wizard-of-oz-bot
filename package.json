@@ -1,0 +1,12 @@
+{
+  "name": "wozbot",
+  "version": "1.0.0",
+  "author": "Greg Tatum",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "0.20.0",
+    "imgcat": "2.3.0",
+    "node-notifier": "4.6.0",
+    "twit": "2.2.4"
+  }
+}
