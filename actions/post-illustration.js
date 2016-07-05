@@ -8,11 +8,21 @@ const notifier = require('node-notifier')
 
 // Grab a random message
 const bookPaths = require('../books')
-const bookPath = path.resolve(
-  __dirname,
-  '../books/',
-  pickOne(bookPaths)
-)
+const relativeBookPath = process.argv[2]
+
+// Use the provided path, or grab a random book
+const bookPath = relativeBookPath
+  ? path.resolve(
+      __dirname,
+      '../',
+      relativeBookPath,
+      "book.json"
+    )
+  : path.resolve(
+      __dirname,
+      '../books/',
+      pickOne(bookPaths)
+    )
 const book = require(bookPath)
 const sentence = pickOne(book)
 const words = sentence.words
